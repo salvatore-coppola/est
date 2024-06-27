@@ -177,6 +177,9 @@ func (ca *MockCA) Enroll(
 
 	now := time.Now()
 	notAfter := now.Add(defaultCertificateDuration)
+	if csr.Subject.CommonName == "Testing Non-Production EST Server" {
+		notAfter = now.Add(rootCertificateDuration-1)
+	}
 	if latest := ca.certs[0].NotAfter.Sub(notAfter); latest < 0 {
 		// Don't issue any certificates which expire after the CA certificate.
 		notAfter = ca.certs[0].NotAfter
