@@ -146,6 +146,8 @@ func main() {
 		}
 
 		tmpl := &x509.CertificateRequest{
+			NotBefore:   now,
+			NotAfter:    now.Add(time.Hour * 23),
 			Subject:     pkix.Name{CommonName: "Testing Non-Production EST Server"},
 			DNSNames:    []string{"localhost"},
 			IPAddresses: []net.IP{net.ParseIP("127.0.0.1"), net.ParseIP("::1")},
